@@ -3,34 +3,66 @@ from bottle import route, run, request, abort, static_file
 from fsm import TocMachine
 
 
-VERIFY_TOKEN = "Your Webhook Verify Token"
+VERIFY_TOKEN = "1234567890987654321"
 machine = TocMachine(
     states=[
         'user',
-        'state1',
-        'state2'
+        'rock_song',
+        'study_song',
+	'one_ok_rock',
+	'pink_noise',
+	'slash'
     ],
     transitions=[
         {
             'trigger': 'advance',
             'source': 'user',
-            'dest': 'state1',
-            'conditions': 'is_going_to_state1'
+            'dest': 'rock_song',
+            'conditions': 'is_going_to_rock_song'
         },
         {
             'trigger': 'advance',
             'source': 'user',
-            'dest': 'state2',
-            'conditions': 'is_going_to_state2'
+            'dest': 'study_song',
+            'conditions': 'is_going_to_study_song'
+        },
+        {
+            'trigger': 'advance',
+            'source': ['rock_song','one_ok_rock'],
+            'dest': 'one_ok_rock',
+            'conditions': 'choose_one_ok_rock'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'rock_song',
+            'dest': 'pink_noise',
+            'conditions': 'choose_pink_noise'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'rock_song',
+            'dest': 'slash',
+            'conditions': 'choose_slash'
         },
         {
             'trigger': 'go_back',
             'source': [
-                'state1',
-                'state2'
+                'rock_song',
+                'study_song'
             ],
             'dest': 'user'
+        },
+        {
+            'trigger': 'advance',
+            'source': [
+                'one_ok_rock',
+                'pink_noise',
+                'slash'
+            ],
+            'dest': 'rock_song',
+            'conditions': 'again'
         }
+
     ],
     initial='user',
     auto_transitions=False,

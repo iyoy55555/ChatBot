@@ -14,12 +14,18 @@ class TocMachine(GraphMachine):
     def is_going_to_state2(self, text):
         return text.lower() == 'go to state2'
 
+    def is_going_to_state3(self, text):
+        return text.lower() == 'go to state3'
+
     def on_enter_state1(self, event):
         print("I'm entering state1")
         print('CURRENT STATE: ' + machine.state)
-        self.go_back()
 
-    def on_exit_state1(self):
+    def on_enter_state3(self, event):
+        print("I'm entering state3")
+        print('CURRENT STATE: ' + machine.state)
+
+    def on_exit_state1(self,event):
         print('Leaving state1')
 
     def on_enter_state2(self, event):
@@ -35,7 +41,8 @@ machine = TocMachine(
     states=[
         'user',
         'state1',
-        'state2'
+        'state2',
+	'state3'
     ],
     transitions=[
         {
@@ -51,13 +58,25 @@ machine = TocMachine(
             'conditions': 'is_going_to_state2'
         },
         {
+            'trigger': 'advance',
+            'source': 'state1',
+            'dest': 'state3',
+            'conditions': 'is_going_to_state3'
+        },
+        {
             'trigger': 'go_back',
             'source': [
                 'state1',
                 'state2'
             ],
             'dest': 'user'
+        },
+        {
+            'trigger': 'go_backk',
+            'source': 'state3',
+            'dest': 'user'
         }
+
     ],
     initial='user',
     auto_transitions=False,
