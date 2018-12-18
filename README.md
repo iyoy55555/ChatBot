@@ -1,63 +1,74 @@
-# TOC Project 2019
+# 計理期末ChatBot---Simple_JukeBox
 
-Template Code for TOC Project 2019
+## package requirement
+1.bottle
+2.pygraphviz
+3.requests
+4.transitions
+5.beautifulsoup4
 
-A Facebook messenger bot based on a finite state machine
-
-More details in the [Slides](https://hackmd.io/p/SkpBR-Yam#/)
-
-## Setup
-
-### Prerequisite
-* Python 3
-* Facebook Page and App
-* HTTPS Server
-
-#### Install Dependency
-```sh
-pip install -r requirements.txt
+## How to use
+### run ngrok
+run ngrok in the folder
 ```
-
-* pygraphviz (For visualizing Finite State Machine)
-    * [Setup pygraphviz on Ubuntu](http://www.jianshu.com/p/a3da7ecc5303)
-
-#### Secret Data
-
-`VERIFY_TOKEN` and `ACCESS_TOKEN` **MUST** be set to proper values.
-Otherwise, you might not be able to run your code.
-
-#### Run Locally
-You can either setup https server or using `ngrok` as a proxy.
-
-**`ngrok` would be used in the following instruction**
-
-```sh
 ./ngrok http 5000
 ```
-
-After that, `ngrok` would generate a https URL.
-
-#### Run the sever
-
-```sh
+### run the app
+```
 python3 app.py
 ```
 
-## Finite State Machine
-![fsm](./img/show-fsm.png)
+## How to use the chatbot
+Here is the diagram
 
-## Usage
-The initial state is set to `user`.
+![](https://i.imgur.com/08Cq7nR.png)
 
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
+You can send 'help' to know what you can send
 
-* user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
+There are mainly there mode
+### Select rock song
+Send 'rock song' in the user mode, the chatbot turn into rock song mode
+The chatbot will tell you to choose a band.
+You can choose one of the bands simple by pressing the button.
+Or you can go back to user mode by send go back
 
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
+
+After you choose the mode, you have two choice
+1. choose another song by send the name of the band(the bot will tell you)
+2. send 'go back' to go back to the band select state
+
+### Select study song
+Send 'study song' in the user mode, the chatbot turn into study song mode
+The Chatbot will send you a study bgm and ask you question
+You have two choice:
+1. choose another song by send 'study song'
+2. send 'go back' to go back to the user mode
+
+### Talking mode
+In this mode, Chatbot will ask your emotion, you have three choice
+1. happy
+2. angry
+3. sad
+
+You can choose one of them simply by pressing the button
+
+#### choose happy
+The Chatbot will send you a song and then ask you if you want another.
+There are two buttons
+1. yes
+2. no
+
+If yes it will send you another song and ask you again
+If no it will send you a song to encourage you and return the user mode
+
+#### choose angry and sad
+The Chatbot will send you a song and then ask for your feeling.
+There are three buttons
+1. feel better
+2. angry
+3. sad
+
+If feel better it will send you a song to encourage you and return the user mode
+If angry or sad it will send you a song of angry or sad and ask you again
 
 
-## Reference
-[TOC-Project-2017](https://github.com/Lee-W/TOC-Project-2017) ❤️ [@Lee-W](https://github.com/Lee-W)
