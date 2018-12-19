@@ -118,7 +118,7 @@ class TocMachine(GraphMachine):
 
     def on_enter_help(self, event):
         sender_id = event['sender']['id']
-        responese = send_text_message(sender_id, "You can send rock song to get the rock songs I recommended,\nor you can send study song to get some working bgms")
+        responese = send_text_message(sender_id, "There are three options:\n1. rock song: to get the rock songs I recommended,\n2. study: song to get some working bgms\n3.talking: get music according to your emotion")
         event['sender']['text']=""
         self.go_back(event)
 
@@ -137,6 +137,7 @@ class TocMachine(GraphMachine):
         send_text_message(sender_id,"Now I give you some songs to encourage to improve your life")
         send_video_template(sender_id, "https://www.youtube.com/watch?v=FOvfM0fe-FE&list=PLICIxeiTbvFD_ox665MtNrU8xGjFccRRv")
         send_text_message(sender_id,"Good Bye~~")
+        send_attachment_url(sender_id,'image',"https://i.imgur.com/u2xo5S0.jpg")
         self.go_back()
 
 
@@ -180,7 +181,7 @@ class TocMachine(GraphMachine):
     def on_enter_happy(self, event):
         sender_id = event['sender']['id']
         send_text_message(sender_id, "That's sound good~ Congratulations\nHere is a song to make you stay in happy")
-        url=scrape_song("https://www.youtube.com/playlist?list=PLICIxeiTbvFD_ox665MtNrU8xGjFccRRv")
+        url=scrape_song("https://www.youtube.com/playlist?list=PLICIxeiTbvFDIKibqc2cU-zhfX3vxStlU")
         send_video_template(sender_id, url)
         send_button_message(sender_id, "Want another?",[{'type':'postback','title':'Yes','payload':'yes'},{'type':'postback','title':'No','payload':'no'}])
         event['postback']['payload']=""
@@ -188,7 +189,8 @@ class TocMachine(GraphMachine):
     def on_enter_angry(self, event):
         sender_id = event['sender']['id']
         send_text_message(sender_id, "You must want to roar now\nHere is a song to help you roar")
-        send_video_template(sender_id, "https://www.youtube.com/watch?v=exDMNWVW2GA")
+        url = scrape_song("https://www.youtube.com/playlist?list=PLICIxeiTbvFDqc6aWYdlf8HJVM6gR4ZsK")
+        send_video_template(sender_id, url)
         event['postback']['payload']=""
         self.go_to_ask_again(event)
 
@@ -196,7 +198,8 @@ class TocMachine(GraphMachine):
     def on_enter_sad(self, event):
         sender_id = event['sender']['id']
         send_text_message(sender_id, "That's too bad\nHere is a song to help you cry")
-        send_video_template(sender_id, "https://www.youtube.com/watch?v=XPz47MKHDtY")
+        url = scrape_song("https://www.youtube.com/playlist?list=PLICIxeiTbvFCGjchFvq4wS7wyAhDw64Db")
+        send_video_template(sender_id, url)
         event['postback']['payload']=""
         self.go_to_ask_again(event)
 
